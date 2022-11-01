@@ -1,5 +1,4 @@
 #include "DEFINES.hpp"
-
 #include "./Console.cpp"
 #include "./utils.cpp"
 
@@ -12,9 +11,10 @@ private:
     int selectedMonth, selectedYear, selectedDay;
 
 public:
-    int startDay, noOfRows, noOfDays;
+    int startDay, noOfRows, noOfDays,cycleLen=3;
 
 public:
+    void setCycleLen(int len){cycleLen = len;}
     void setDate(int year, int month, int day)
     {
         selectedMonth = month;
@@ -75,16 +75,22 @@ public:
                             if (_day <= 31)
                             {
                                 string text = to_string(_day);
+                                // length of the cycle
+                                int temp_cycleLen = cycleLen;
 
-                                if (_day == selectedDay)
-                                {
-                                    //
-                                    //
-                                    // TODO: Change color
-                                    //
-                                    //
+                                if ((selectedDay <= _day && _day < selectedDay+cycleLen)){
+                                    temp_cycleLen--;
                                     console.print(text, Color::RED);
                                 }
+                                // if (_day == selectedDay || _day == selectedDay+1 || _day == selectedDay+2)
+                                // {
+                                //     //
+                                //     //
+                                //     // TODO: Change color
+                                //     //
+                                //     //
+                                //     console.print(text, Color::RED);
+                                // }
                                 else
                                     console.print(text);
                             }
@@ -187,4 +193,15 @@ public:
 
         setDate(year, month, day);
     }
+
+    int ret_day() const{
+        return selectedDay;
+    }
+    int ret_mon() const{
+        return selectedMonth;
+    }
+    int ret_year() const{
+        return selectedYear;
+    }
+
 };
